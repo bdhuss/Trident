@@ -77,10 +77,12 @@ void loop() {
   lcd.print((char)223);
   lcd.print("F:  ");
   lcd.print(temperatureF, 1);
+  lcd.print((char)223);
 
   lcd.setCursor(0, 2);
   lcd.print("TDS: ");
-  lcd.print(tdsValue);
+  lcd.print(tdsValue, 0);
+  lcd.print(" PPM");
   delay(1000);
 }
 

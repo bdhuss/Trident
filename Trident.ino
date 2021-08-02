@@ -18,6 +18,7 @@
 #include "DFRobot_PH.h"
 #include <GravityTDS.h>
 
+// Pin layout for the Arduino
 #define LCD_RS 7
 #define LCD_EN 8
 #define LCD_D4 9
@@ -46,6 +47,7 @@ byte customChar_Block[8] = { // custom character: filled block
   0b11111
 };
 
+// Setup and configure all the sensors and lcd screen. Allow 5 seconds for sensors to balance before taking readings.
 void setup() {
   tempSensor.begin();
   ph.begin();
@@ -57,11 +59,10 @@ void setup() {
   lcd.createChar(0, customChar_Block);
   lcd.begin(20, 4);
   loadingScreen();
-//  lcd.setCursor(7, 1);
-//  lcd.print("WELCOME!");
   delay(5000);
 }
 
+// Gather readings from sensors, then display to LCD with formatting
 void loop() {
   getTemps();
   getPH();
@@ -83,7 +84,7 @@ void loop() {
   lcd.print("TDS: ");
   lcd.print(tdsValue, 0);
   lcd.print(" PPM");
-  delay(1000);
+  delay(1000); // wait 1s before looping
 }
 
 // Gather temperature from sensor
@@ -93,23 +94,27 @@ void getTemps() {
   temperatureF = tempSensor.toFahrenheit(temperatureC);
 }
 
+// Convert voltage and then gather/calculate pH reading
 void getPH() {
   voltage = analogRead(PH_PIN)/1024.0*5000;
   phValue = ph.readPH(voltage, temperatureC);
 }
 
+// Gather TDS reading
 void getTDS() {
   tds.setTemperature(temperatureC);
   tds.update();
   tdsValue = tds.getTdsValue();
 }
 
+// Waiting screen formatting. Allows sensors to equalize before displaying readings
 void loadingScreen() {
   lcd.setCursor(7, 1);
   lcd.print("TRIDENT");
   lcd.setCursor(6, 2);
   lcd.print("Loading..");
 
+  // fill borders of screen with custom character
   for (int row = 0; row < 4; row++) {
     lcd.setCursor(0, row);
     if (row == 1 || row == 2) {

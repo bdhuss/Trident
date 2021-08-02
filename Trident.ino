@@ -1,3 +1,16 @@
+// |================================================================================|
+// | Project: Trident                                                               |
+// | Author: Bryan Huss                                                             |
+// | Date: 7/20/21                                                                  |
+// | Description: Custom made arduino project using sensors to test pool water      |
+// | quality. Gathers data and displays to a 20x4 LCD screen.                       |
+// |--------------------------------------------------------------------------------|
+// | LCD: Standard HD44780 LCD                                                      |
+// | Temperature sensor: DS18B20 Programmable Resolution 1-Wire Digital Thermometer |
+// | pH sensor: DFRobot Gravity: Analog pH Sensor / Meter Pro                       |
+// | TDS sensor: DFRobot Gravity: Analog TDS Sensor/Meter for Arduino               |
+// |================================================================================|
+
 #include <LiquidCrystal.h>
 #include <DallasTemperature.h>
 #include <OneWire.h>

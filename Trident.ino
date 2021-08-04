@@ -29,6 +29,9 @@
 #define PH_PIN A2
 #define TDS_SENSOR A1
 
+#define ADC_RES 1024
+#define VREF 5000
+
 LiquidCrystal lcd(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
 OneWire DS18B20(DS18B20_PIN);
 DallasTemperature tempSensor(&DS18B20);
@@ -96,7 +99,8 @@ void getTemps() {
 
 // Convert voltage and then gather/calculate pH reading
 void getPH() {
-  voltage = analogRead(PH_PIN)/1024.0*5000;
+//  voltage = analogRead(PH_PIN)/1024.0*5000;
+  voltage = analogRead((PH_PIN) * VREF) / ADC_RES; // convert analog reading to mV 
   phValue = ph.readPH(voltage, temperatureC);
 }
 
